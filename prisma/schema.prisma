@@ -7,10 +7,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Define User model
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int      @id 
+  username  String   
   email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  reservations Reservation[]
+}
+
+model Room {
+  id            Int      @id @default(autoincrement())
+  roomName      String
+  roomSize      Int
+  roomDescription String
+  roomConditions String
+  roomPrice     Float
+  reservations  Reservation[] 
+}
+
+model MealPlan {
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String
+  meals         Meal[]
+}
+
+model Meal {
+  id                  Int       @id @default(autoincrement())
+  name                String
+  description         String
+  breakfastAvailable  Boolean
+  lunchAvailable      Boolean
+  dinnerAvailable     Boolean
+  mealPlan            MealPlan  @relation(fields: [mealPlanId], references: [id])
+  mealPlanId          Int
+  reservationDailyMeals   ReservationDailyMeal[]
+}
+
+model Reservation {
+  id            Int      @id @default(autoincrement())
+  room          Room     @relation(fields: [roomId], references: [id])
+  roomId        Int
+  customer      User     @relation(fields: [customerId], references: [id])
+  customerId    Int
+  startDate     DateTime
+  endDate       DateTime
+  meals         ReservationDailyMealSet[]
+}
+
+model ReservationDailyMealSet {
+  id                      Int           @id @default(autoincrement())
+  reservation             Reservation   @relation(fields: [reservationId], references: [id])
+  reservationId           Int           
+  date                    DateTime
+  reservationDailyMeals   ReservationDailyMeal[]
+}
+
+model ReservationDailyMeal {
+  id                          Int                       @id @default(autoincrement())
+  reservationDailyMealSet     ReservationDailyMealSet   @relation(fields: [reservationDailyMealSetId], references: [id])
+  reservationDailyMealSetId   Int
+  meal                        Meal                      @relation(fields: [mealId], references: [id])
+  mealId                      Int
+  type                        MealType
+  quantity                    Int
+}
+
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
 }

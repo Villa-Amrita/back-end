@@ -44,9 +44,10 @@ userRouter.route("/update").put(async (req: Request, res: Response) => {
   }
 })
 
-userRouter.route("/view").get(async (req: Request, res: Response) => {
+userRouter.route("/view/:id").get(async (req: Request, res: Response) => {
   try {
-    const user: User = await viewUser(req.body)
+    const id: string = req.params.id
+    const user: User = await viewUser({ id })
     res.status(200).json({ message: "User Viewed", data: user })
   } catch (error: any) {
     console.log(error)
@@ -56,17 +57,20 @@ userRouter.route("/view").get(async (req: Request, res: Response) => {
   }
 })
 
-userRouter.route("/viewByEmail").get(async (req: Request, res: Response) => {
-  try {
-    const user: User = await viewUserByEmail(req.body)
-    res.status(200).json({ message: "User Viewed", data: user })
-  } catch (error: any) {
-    console.log(error)
-    res.status(500).json({
-      error: error.message
-    })
-  }
-})
+userRouter
+  .route("/viewByEmail/:email")
+  .get(async (req: Request, res: Response) => {
+    try {
+      const email: string = req.params.email
+      const user: User = await viewUserByEmail({ email })
+      res.status(200).json({ message: "User Viewed", data: user })
+    } catch (error: any) {
+      console.log(error)
+      res.status(500).json({
+        error: error.message
+      })
+    }
+  })
 
 userRouter.route("/viewAll").get(async (req: Request, res: Response) => {
   try {

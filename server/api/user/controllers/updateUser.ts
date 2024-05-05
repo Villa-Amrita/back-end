@@ -3,7 +3,7 @@ import handlePrismaError from "../../../../utils/handlePrismaError"
 
 const prisma = new PrismaClient()
 
-interface CreateUserInput {
+interface UpdateUserInput {
   id: string
   firstName: string
   familyName: string
@@ -11,27 +11,29 @@ interface CreateUserInput {
   email: string
 }
 
-async function createUser({
+async function updateUser({
   id,
   firstName,
   familyName,
   nic,
   email
-}: CreateUserInput): Promise<User> {
+}: UpdateUserInput): Promise<User> {
   try {
     const existingUser = await prisma.user.findUnique({
       where: {
-        email: email
+        id: id
       }
     })
 
-    if (existingUser) {
-      throw new Error("User with this email already exists")
+    if (!existingUser) {
+      throw new Error("A user with the provided id does not exist")
     }
 
-    const newUser = await prisma.user.create({
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: id
+      },
       data: {
-        id: id,
         firstName: firstName,
         familyName: familyName,
         nic: nic,
@@ -39,11 +41,11 @@ async function createUser({
       }
     })
 
-    return newUser
+    return updatedUser
   } catch (error: Error | any) {
     const prismaError = handlePrismaError(error, "User")
     throw new Error(prismaError.error)
   }
 }
 
-export default createUser
+export default updateUser

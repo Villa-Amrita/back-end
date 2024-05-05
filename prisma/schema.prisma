@@ -9,10 +9,12 @@ datasource db {
 
 // Define User model
 model User {
-  id        Int      @id 
-  username  String   
-  email     String   @unique
-  reservations Reservation[]
+  id            String             @id
+  firstName     String
+  familyName    String
+  nic           String   
+  email         String          @unique
+  reservations  Reservation[]
 }
 
 model Room {
@@ -49,7 +51,7 @@ model Reservation {
   room          Room     @relation(fields: [roomId], references: [id])
   roomId        Int
   customer      User     @relation(fields: [customerId], references: [id])
-  customerId    Int
+  customerId    String
   startDate     DateTime
   endDate       DateTime
   meals         ReservationDailyMealSet[]

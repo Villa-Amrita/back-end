@@ -19,11 +19,11 @@ model User {
 
 model Room {
   id            Int      @id @default(autoincrement())
-  roomName      String
+  roomName      String 
   roomSize      Int
-  roomDescription String
+  roomDescription String @db.VarChar(1000)
   roomConditions String
-  roomPrice     Float
+  roomPrice     Int
   reservations  Reservation[] 
 }
 

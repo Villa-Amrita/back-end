@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon server/server.ts",
     "test": "jest --watchAll --verbose",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc"
   },
   "keywords": [],
   "author": "",

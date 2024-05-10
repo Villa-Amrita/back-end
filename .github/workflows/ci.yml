@@ -1,4 +1,4 @@
-name: CI/CD for Express API
+name: CI for Villa Amrita Back-end
 
 on:
   push:

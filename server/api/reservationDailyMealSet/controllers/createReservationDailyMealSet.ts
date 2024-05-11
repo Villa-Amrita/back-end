@@ -20,7 +20,6 @@ async function createReservationDailyMealSet({
           date: date
         }
       })
-
     return newReservationDailyMealSet
   } catch (error: any) {
     const prismaError = handlePrismaError(error, "ReservationDailyMealSet")

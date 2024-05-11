@@ -1,11 +1,12 @@
 import { PrismaClient, ReservationDailyMeal, MealType } from "@prisma/client"
+import handlePrismaError from "../../../../utils/handlePrismaError"
 
 const prisma = new PrismaClient()
 
 interface UpdateReservationDailyMealInput {
   id: number
   mealId: number
-  type: MealType
+  type: string
   quantity: number
 }
 
@@ -16,6 +17,7 @@ async function updateReservationDailyMeal({
   quantity
 }: UpdateReservationDailyMealInput): Promise<ReservationDailyMeal> {
   try {
+    const mealType: MealType = type as MealType
     const updatedReservationDailyMeal =
       await prisma.reservationDailyMeal.update({
         where: {
@@ -23,16 +25,15 @@ async function updateReservationDailyMeal({
         },
         data: {
           mealId: mealId,
-          type: type,
+          type: mealType,
           quantity: quantity
         }
       })
 
     return updatedReservationDailyMeal
   } catch (error: any) {
-    throw new Error(
-      error.message || "An error occurred while updating ReservationDailyMeal"
-    )
+    const prismaError = handlePrismaError(error, "ReservationDailyMeal")
+    throw new Error(prismaError.error)
   }
 }
 

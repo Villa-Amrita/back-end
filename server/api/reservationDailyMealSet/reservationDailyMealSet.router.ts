@@ -7,7 +7,6 @@ import {
 } from "./controllers"
 
 interface CreateReservationDailyMealSetInput {
-  id: number
   reservationId: number
   date: Date
 }
@@ -29,12 +28,10 @@ reservationDailyMealSetRouter
       const newReservationDailyMealSet = await createReservationDailyMealSet(
         reservationDailyMealSetInput
       )
-      res
-        .status(200)
-        .json({
-          message: "ReservationDailyMealSet Created",
-          data: newReservationDailyMealSet
-        })
+      res.status(200).json({
+        message: "ReservationDailyMealSet Created",
+        data: newReservationDailyMealSet
+      })
     } catch (error: any) {
       console.log(error)
       res.status(500).json({
@@ -51,12 +48,10 @@ reservationDailyMealSetRouter
         req.body
       const updatedReservationDailyMealSet =
         await updateReservationDailyMealSet(reservationDailyMealSetInput)
-      res
-        .status(200)
-        .json({
-          message: "ReservationDailyMealSet Updated",
-          data: updatedReservationDailyMealSet
-        })
+      res.status(200).json({
+        message: "ReservationDailyMealSet Updated",
+        data: updatedReservationDailyMealSet
+      })
     } catch (error: any) {
       console.log(error)
       res.status(500).json({
@@ -71,12 +66,10 @@ reservationDailyMealSetRouter
     try {
       const id: number = parseInt(req.params.id)
       const reservationDailyMealSet = await viewReservationDailyMealSet({ id })
-      res
-        .status(200)
-        .json({
-          message: "ReservationDailyMealSet Viewed",
-          data: reservationDailyMealSet
-        })
+      res.status(200).json({
+        message: "ReservationDailyMealSet Viewed",
+        data: reservationDailyMealSet
+      })
     } catch (error: any) {
       console.log(error)
       res.status(500).json({
@@ -91,12 +84,10 @@ reservationDailyMealSetRouter
     try {
       const allReservationDailyMealSets =
         await viewAllReservationDailyMealSets()
-      res
-        .status(200)
-        .json({
-          message: "All ReservationDailyMealSets Viewed",
-          data: allReservationDailyMealSets
-        })
+      res.status(200).json({
+        message: "All ReservationDailyMealSets Viewed",
+        data: allReservationDailyMealSets
+      })
     } catch (error: any) {
       console.log(error)
       res.status(500).json({

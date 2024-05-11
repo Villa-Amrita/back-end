@@ -3,6 +3,7 @@ import "dotenv"
 import cors from "cors"
 import express from "express"
 import helmet from "helmet"
+import { initTRPC } from "@trpc/server"
 
 const port = process.env.PORT || 8080
 
@@ -27,5 +28,8 @@ server.use(app)
 server.listen(port, () => {
   console.log(`Listening to Port ${port}`)
 })
+
+// Initialize TRPC
+export const t = initTRPC.create({})
 
 module.exports = server

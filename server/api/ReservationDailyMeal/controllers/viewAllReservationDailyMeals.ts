@@ -1,4 +1,5 @@
 import { PrismaClient, ReservationDailyMeal } from "@prisma/client"
+import handlePrismaError from "../../../../utils/handlePrismaError"
 
 const prisma = new PrismaClient()
 
@@ -8,10 +9,8 @@ async function viewAllReservationDailyMeals(): Promise<ReservationDailyMeal[]> {
       await prisma.reservationDailyMeal.findMany()
     return allReservationDailyMeals
   } catch (error: any) {
-    throw new Error(
-      error.message ||
-        "An error occurred while viewing all ReservationDailyMeals"
-    )
+    const prismaError = handlePrismaError(error, "ReservationDailyMeal")
+    throw new Error(prismaError.error)
   }
 }
 

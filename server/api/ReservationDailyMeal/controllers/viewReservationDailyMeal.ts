@@ -1,4 +1,5 @@
 import { PrismaClient, ReservationDailyMeal } from "@prisma/client"
+import handlePrismaError from "../../../../utils/handlePrismaError"
 
 const prisma = new PrismaClient()
 
@@ -8,7 +9,7 @@ interface ViewReservationDailyMealInput {
 
 async function viewReservationDailyMeal({
   id
-}: ViewReservationDailyMealInput): Promise<ReservationDailyMeal | null> {
+}: ViewReservationDailyMealInput): Promise<ReservationDailyMeal> {
   try {
     const reservationDailyMeal = await prisma.reservationDailyMeal.findUnique({
       where: {
@@ -16,11 +17,14 @@ async function viewReservationDailyMeal({
       }
     })
 
+    if (!reservationDailyMeal) {
+      throw new Error("ReservationDailyMeal not found")
+    }
+
     return reservationDailyMeal
   } catch (error: any) {
-    throw new Error(
-      error.message || "An error occurred while viewing ReservationDailyMeal"
-    )
+    const prismaError = handlePrismaError(error, "ReservationDailyMeal")
+    throw new Error(prismaError.error)
   }
 }
 

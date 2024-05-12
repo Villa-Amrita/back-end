@@ -10,6 +10,9 @@ const port = process.env.PORT || 8080
 // Create Server
 const server = express()
 
+// Initialize TRPC
+export const t = initTRPC.create({})
+
 // Add cors middleware
 server.use(
   cors({
@@ -28,8 +31,5 @@ server.use(app)
 server.listen(port, () => {
   console.log(`Listening to Port ${port}`)
 })
-
-// Initialize TRPC
-export const t = initTRPC.create({})
 
 module.exports = server

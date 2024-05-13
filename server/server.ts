@@ -3,7 +3,6 @@ import "dotenv"
 import cors from "cors"
 import express from "express"
 import helmet from "helmet"
-import { initTRPC } from "@trpc/server"
 
 const port = process.env.PORT || 8080
 

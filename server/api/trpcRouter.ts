@@ -466,3 +466,5 @@ export const trpcRouter = t.router({
   reservationDailyMeal: reservationDailyMealRouter,
   reservationDailyMealSet: reservationDailyMealSetRouter
 })
+
+export type TRPCRouter = typeof trpcRouter

@@ -131,6 +131,26 @@ const ReservationDailyMealSet = z.object({
   date: z.date()
 })
 
+//Types
+export type UserType = z.infer<typeof User>
+export type RoomType = z.infer<typeof Room>
+export type CreateMealInputType = z.infer<typeof CreateMealInput>
+export type MealType = z.infer<typeof Meal>
+export type CreateMealPlanInputType = z.infer<typeof CreateMealPlanInput>
+export type MealPlanType = z.infer<typeof MealPlan>
+export type CreateReservationInputType = z.infer<typeof CreateReservationInput>
+export type ReservationType = z.infer<typeof Reservation>
+export type CreateReservationDailyMealInputType = z.infer<
+  typeof CreateReservationDailyMealInput
+>
+export type ReservationDailyMealType = z.infer<typeof ReservationDailyMeal>
+export type CreateReservationDailyMealSetInputType = z.infer<
+  typeof CreateReservationDailyMealSetInput
+>
+export type ReservationDailyMealSetType = z.infer<
+  typeof ReservationDailyMealSet
+>
+
 //Routers
 const userRouter = t.router({
   createUser: t.procedure

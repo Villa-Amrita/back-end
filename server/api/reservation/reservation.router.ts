@@ -11,6 +11,8 @@ interface CreateReservationInput {
   customerId: string
   startDate: Date
   endDate: Date
+  specialRequests: string
+  status: string
 }
 
 interface UpdateReservationInput {
@@ -19,19 +21,29 @@ interface UpdateReservationInput {
   customerId: string
   startDate: Date
   endDate: Date
+  specialRequests: string
+  status: string
 }
 
 const reservationRouter: Router = express.Router()
 
 reservationRouter.route("/create").post(async (req: Request, res: Response) => {
   try {
-    const { roomId, customerId, startDate, endDate }: CreateReservationInput =
-      req.body
+    const {
+      roomId,
+      customerId,
+      startDate,
+      endDate,
+      specialRequests,
+      status
+    }: CreateReservationInput = req.body
     const reservation = await createReservation({
       roomId,
       customerId,
       startDate,
-      endDate
+      endDate,
+      specialRequests,
+      status
     })
     res.status(200).json({ message: "Reservation Created", data: reservation })
   } catch (error: any) {
@@ -49,14 +61,18 @@ reservationRouter.route("/update").put(async (req: Request, res: Response) => {
       roomId,
       customerId,
       startDate,
-      endDate
+      endDate,
+      specialRequests,
+      status
     }: UpdateReservationInput = req.body
     const reservation = await updateReservation({
       id,
       roomId,
       customerId,
       startDate,
-      endDate
+      endDate,
+      specialRequests,
+      status
     })
     res.status(200).json({ message: "Reservation Updated", data: reservation })
   } catch (error: any) {

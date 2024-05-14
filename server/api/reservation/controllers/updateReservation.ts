@@ -1,4 +1,4 @@
-import { PrismaClient, Reservation } from "@prisma/client"
+import { PrismaClient, Reservation, Status } from "@prisma/client"
 import handlePrismaError from "../../../../utils/handlePrismaError"
 
 const prisma = new PrismaClient()
@@ -9,6 +9,8 @@ interface UpdateReservationInput {
   customerId?: string
   startDate?: Date
   endDate?: Date
+  specialRequests: string
+  status: string
 }
 
 async function updateReservation({
@@ -16,9 +18,12 @@ async function updateReservation({
   roomId,
   customerId,
   startDate,
-  endDate
+  endDate,
+  specialRequests,
+  status
 }: UpdateReservationInput): Promise<Reservation> {
   try {
+    const reservationStatus: Status = status as Status
     const existingReservation = await prisma.reservation.findUnique({
       where: {
         id
@@ -37,7 +42,9 @@ async function updateReservation({
         room: roomId ? { connect: { id: roomId } } : undefined,
         customer: customerId ? { connect: { id: customerId } } : undefined,
         startDate,
-        endDate
+        endDate,
+        specialRequests,
+        status: reservationStatus
       }
     })
 

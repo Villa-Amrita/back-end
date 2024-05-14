@@ -47,14 +47,16 @@ model Meal {
 }
 
 model Reservation {
-  id            Int      @id @default(autoincrement())
-  room          Room     @relation(fields: [roomId], references: [id])
-  roomId        Int
-  customer      User     @relation(fields: [customerId], references: [id])
-  customerId    String
-  startDate     DateTime
-  endDate       DateTime
-  meals         ReservationDailyMealSet[]
+  id              Int      @id @default(autoincrement())
+  room            Room     @relation(fields: [roomId], references: [id])
+  roomId          Int
+  customer        User     @relation(fields: [customerId], references: [id])
+  customerId      String
+  startDate       DateTime
+  endDate         DateTime
+  specialRequests String
+  status          Status
+  meals           ReservationDailyMealSet[]
 }
 
 model ReservationDailyMealSet {
@@ -79,4 +81,11 @@ enum MealType {
   BREAKFAST
   LUNCH
   DINNER
+}
+
+enum Status {
+  PENDING
+  CONFIRMED
+  PAYED
+  CANCELLED
 }

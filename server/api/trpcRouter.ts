@@ -95,7 +95,9 @@ const CreateReservationInput = z.object({
   roomId: z.number(),
   customerId: z.string(),
   startDate: z.date(),
-  endDate: z.date()
+  endDate: z.date(),
+  specialRequests: z.string(),
+  status: z.string()
 })
 
 const Reservation = z.object({
@@ -103,7 +105,9 @@ const Reservation = z.object({
   roomId: z.number(),
   customerId: z.string(),
   startDate: z.date(),
-  endDate: z.date()
+  endDate: z.date(),
+  specialRequests: z.string(),
+  status: z.string()
 })
 
 const CreateReservationDailyMealInput = z.object({

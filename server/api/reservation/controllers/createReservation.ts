@@ -6,8 +6,8 @@ const prisma = new PrismaClient()
 interface CreateReservationInput {
   roomId: number
   customerId: string
-  startDate: Date
-  endDate: Date
+  startDate: string
+  endDate: string
   specialRequests: string
   status: string
 }
@@ -21,13 +21,15 @@ async function createReservation({
   status
 }: CreateReservationInput): Promise<Reservation> {
   try {
+    const startDateFormatted = new Date(startDate)
+    const endDateFormatted = new Date(endDate)
     const reservationStatus: Status = status as Status
     const newReservation = await prisma.reservation.create({
       data: {
         room: { connect: { id: roomId } },
         customer: { connect: { id: customerId } },
-        startDate,
-        endDate,
+        startDate: startDateFormatted,
+        endDate: endDateFormatted,
         specialRequests,
         status: reservationStatus
       }

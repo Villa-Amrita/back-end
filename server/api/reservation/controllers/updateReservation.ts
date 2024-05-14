@@ -5,10 +5,10 @@ const prisma = new PrismaClient()
 
 interface UpdateReservationInput {
   id: number
-  roomId?: number
-  customerId?: string
-  startDate?: Date
-  endDate?: Date
+  roomId: number
+  customerId: string
+  startDate: string
+  endDate: string
   specialRequests: string
   status: string
 }
@@ -23,6 +23,8 @@ async function updateReservation({
   status
 }: UpdateReservationInput): Promise<Reservation> {
   try {
+    const startDateFormatted = new Date(startDate)
+    const endDateFormatted = new Date(endDate)
     const reservationStatus: Status = status as Status
     const existingReservation = await prisma.reservation.findUnique({
       where: {
@@ -41,8 +43,8 @@ async function updateReservation({
       data: {
         room: roomId ? { connect: { id: roomId } } : undefined,
         customer: customerId ? { connect: { id: customerId } } : undefined,
-        startDate,
-        endDate,
+        startDate: startDateFormatted,
+        endDate: endDateFormatted,
         specialRequests,
         status: reservationStatus
       }

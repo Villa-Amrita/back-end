@@ -94,8 +94,18 @@ const MealPlan = z.object({
 const CreateReservationInput = z.object({
   roomId: z.number(),
   customerId: z.string(),
-  startDate: z.date(),
-  endDate: z.date(),
+  startDate: z.string(),
+  endDate: z.string(),
+  specialRequests: z.string(),
+  status: z.string()
+})
+
+const UpdateReservationInput = z.object({
+  id: z.number(),
+  roomId: z.number(),
+  customerId: z.string(),
+  startDate: z.string(),
+  endDate: z.string(),
   specialRequests: z.string(),
   status: z.string()
 })
@@ -143,6 +153,7 @@ export type MealType = z.infer<typeof Meal>
 export type CreateMealPlanInputType = z.infer<typeof CreateMealPlanInput>
 export type MealPlanType = z.infer<typeof MealPlan>
 export type CreateReservationInputType = z.infer<typeof CreateReservationInput>
+export type UpdateReservationInputType = z.infer<typeof UpdateReservationInput>
 export type ReservationType = z.infer<typeof Reservation>
 export type CreateReservationDailyMealInputType = z.infer<
   typeof CreateReservationDailyMealInput
@@ -345,7 +356,7 @@ export const reservationRouter = t.router({
       }
     }),
   updateReservation: t.procedure
-    .input(Reservation)
+    .input(UpdateReservationInput)
     .output(Reservation)
     .mutation(async ({ input }) => {
       try {

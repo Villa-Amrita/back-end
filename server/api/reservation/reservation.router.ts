@@ -9,8 +9,8 @@ import {
 interface CreateReservationInput {
   roomId: number
   customerId: string
-  startDate: Date
-  endDate: Date
+  startDate: string
+  endDate: string
   specialRequests: string
   status: string
 }
@@ -19,8 +19,8 @@ interface UpdateReservationInput {
   id: number
   roomId: number
   customerId: string
-  startDate: Date
-  endDate: Date
+  startDate: string
+  endDate: string
   specialRequests: string
   status: string
 }

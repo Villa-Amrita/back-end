@@ -25,7 +25,8 @@ import {
   createReservation,
   updateReservation,
   viewReservation,
-  viewAllReservations
+  viewAllReservations,
+  viewAllCustomerReservations
 } from "./reservation/controllers"
 import {
   createReservationDailyMeal,
@@ -381,6 +382,19 @@ export const reservationRouter = t.router({
     .query(async ({ input }) => {
       try {
         const reservation = await viewReservation({ id: input })
+        return reservation
+      } catch (error) {
+        throw handleTRPCError(error, "Reservation")
+      }
+    }),
+  viewAllCustomerReservations: t.procedure
+    .input(z.string())
+    .output(z.array(Reservation))
+    .query(async ({ input }) => {
+      try {
+        const reservation = await viewAllCustomerReservations({
+          customerId: input
+        })
         return reservation
       } catch (error) {
         throw handleTRPCError(error, "Reservation")

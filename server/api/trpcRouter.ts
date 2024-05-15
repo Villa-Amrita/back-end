@@ -136,7 +136,13 @@ const ReservationDailyMeal = z.object({
 
 const CreateReservationDailyMealSetInput = z.object({
   reservationId: z.number(),
-  date: z.date()
+  date: z.string()
+})
+
+const UpdateReservationDailyMealSetInput = z.object({
+  id: z.number(),
+  reservationId: z.number(),
+  date: z.string()
 })
 
 const ReservationDailyMealSet = z.object({
@@ -164,6 +170,9 @@ export type CreateReservationDailyMealSetInputType = z.infer<
 >
 export type ReservationDailyMealSetType = z.infer<
   typeof ReservationDailyMealSet
+>
+export type UpdateReservationDailyMealSetInputType = z.infer<
+  typeof UpdateReservationDailyMealSetInput
 >
 
 //Routers
@@ -454,7 +463,7 @@ const reservationDailyMealSetRouter = t.router({
       }
     }),
   updateReservationDailyMealSet: t.procedure
-    .input(ReservationDailyMealSet)
+    .input(UpdateReservationDailyMealSetInput)
     .output(ReservationDailyMealSet)
     .mutation(async ({ input }) => {
       try {

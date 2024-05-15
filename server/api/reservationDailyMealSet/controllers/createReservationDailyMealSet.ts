@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 interface CreateReservationDailyMealSetInput {
   reservationId: number
-  date: Date
+  date: string
 }
 
 async function createReservationDailyMealSet({
@@ -13,11 +13,12 @@ async function createReservationDailyMealSet({
   date
 }: CreateReservationDailyMealSetInput): Promise<ReservationDailyMealSet> {
   try {
+    const dateFormatted = new Date(date)
     const newReservationDailyMealSet =
       await prisma.reservationDailyMealSet.create({
         data: {
           reservationId: reservationId,
-          date: date
+          date: dateFormatted
         }
       })
     return newReservationDailyMealSet

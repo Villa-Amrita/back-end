@@ -8,13 +8,13 @@ import {
 
 interface CreateReservationDailyMealSetInput {
   reservationId: number
-  date: Date
+  date: string
 }
 
 interface UpdateReservationDailyMealSetInput {
   id: number
   reservationId: number
-  date: Date
+  date: string
 }
 
 const reservationDailyMealSetRouter: Router = express.Router()

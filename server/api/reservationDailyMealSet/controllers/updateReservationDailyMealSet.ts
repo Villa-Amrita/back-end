@@ -5,8 +5,8 @@ const prisma = new PrismaClient()
 
 interface UpdateReservationDailyMealSetInput {
   id: number
-  reservationId?: number
-  date?: Date
+  reservationId: number
+  date: string
 }
 
 async function updateReservationDailyMealSet({
@@ -15,6 +15,7 @@ async function updateReservationDailyMealSet({
   date
 }: UpdateReservationDailyMealSetInput): Promise<ReservationDailyMealSet> {
   try {
+    const dateFormatted = new Date(date)
     const updatedReservationDailyMealSet =
       await prisma.reservationDailyMealSet.update({
         where: {
@@ -22,7 +23,7 @@ async function updateReservationDailyMealSet({
         },
         data: {
           reservationId: reservationId,
-          date: date
+          date: dateFormatted
         }
       })
 
